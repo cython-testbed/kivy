@@ -392,7 +392,7 @@ class WindowSDL(WindowBase):
         # for android/iOS, we don't want to have any event nor executing our
         # main loop while the pause is going on. This loop wait any event (not
         # handled by the event filter), and remove them from the queue.
-        # Nothing happen during the pause on iOS, except gyroscope value sended
+        # Nothing happen during the pause on iOS, except gyroscope value sent
         # over joystick. So it's safe.
         while self._pause_loop:
             self._win.wait_event()
@@ -682,7 +682,7 @@ class WindowSDL(WindowBase):
     def request_keyboard(self, callback, target, input_type='text'):
         self._sdl_keyboard = super(WindowSDL, self).\
             request_keyboard(callback, target, input_type)
-        self._win.show_keyboard()
+        self._win.show_keyboard(self._system_keyboard, self.softinput_mode)
         Clock.schedule_interval(self._check_keyboard_shown, 1 / 5.)
         return self._sdl_keyboard
 

@@ -220,7 +220,8 @@ class TabbedPanelItem(TabbedPanelHeader):
 class TabbedPanelStrip(GridLayout):
     '''A strip intended to be used as background for Heading/Tab.
     This does not cover the blank areas in case the tabs don't cover
-    the entire width/height of the TabbedPanel(use StripLayout for that).
+    the entire width/height of the TabbedPanel(use :class:`StripLayout`
+    for that).
     '''
     tabbed_panel = ObjectProperty(None)
     '''Link to the panel that the tab strip is a part of.
@@ -251,7 +252,7 @@ class StripLayout(GridLayout):
     '''Background image to be used for the Strip layout of the TabbedPanel.
 
     :attr:`background_image` is a :class:`~kivy.properties.StringProperty` and
-     defaults to a transparent image.
+    defaults to a transparent image.
     '''
 
 
@@ -470,7 +471,7 @@ class TabbedPanel(GridLayout):
         self.rows = 1
         self._tab_strip = TabbedPanelStrip(
             tabbed_panel=self,
-            rows=1, cols=99, size_hint=(None, None),
+            rows=1, size_hint=(None, None),
             height=self.tab_height, width=self.tab_width)
 
         self._partial_update_scrollview = None
@@ -625,7 +626,7 @@ class TabbedPanel(GridLayout):
             raise TabbedPanelException('`default_tab_class` should be\
                 subclassed from `TabbedPanelHeader`')
 
-        # no need to instanciate if class is TabbedPanelHeader
+        # no need to instantiate if class is TabbedPanelHeader
         if cls != TabbedPanelHeader:
             self._current_tab = self._original_tab = self._default_tab = cls()
 
