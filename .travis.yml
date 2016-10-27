@@ -40,9 +40,9 @@ install:
           sudo apt-get -y install python-setuptools build-essential libgl1-mesa-dev libgles2-mesa-dev;
           sudo apt-get -y install xvfb pulseaudio;
           if [ "${PY}" == "3" ]; then
-            sudo pip3 install https://github.com/cython/cython/archive/master.zip --install-option=--no-cython-compile;
+            sudo pip3 install https://github.com/cython/cython/archive/0.25.1.zip --install-option=--no-cython-compile;
           else
-            sudo pip install https://github.com/cython/cython/archive/master.zip --install-option=--no-cython-compile;
+            sudo pip install https://github.com/cython/cython/archive/0.25.1.zip --install-option=--no-cython-compile;
           fi;
           pip install --upgrade pillow nose coveralls;
         fi;
@@ -85,10 +85,10 @@ install:
       if [ "${PY}" == "3" ]; then
          curl -O -L https://www.python.org/ftp/python/3.5.1/python-3.5.1-macosx10.6.pkg;
          sudo installer -package python-3.5.1-macosx10.6.pkg -target /;
-         sudo pip3 install https://github.com/cython/cython/archive/master.zip --install-option=--no-cython-compile;
+         sudo pip3 install https://github.com/cython/cython/archive/0.25.1.zip --install-option=--no-cython-compile;
          pip3 install --upgrade --user pillow nose mock;
       else
-         sudo pip install https://github.com/cython/cython/archive/master.zip --install-option=--no-cython-compile;
+         sudo pip install https://github.com/cython/cython/archive/0.25.1.zip --install-option=--no-cython-compile;
          pip install --upgrade --user pillow nose mock;
       fi;
     fi;
