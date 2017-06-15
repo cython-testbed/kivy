@@ -52,7 +52,7 @@ With Kivy, you can do::
 
 
 Depth being tracked
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 Only the "top level" of a nested object is being tracked. For example::
 
@@ -113,6 +113,61 @@ substitute::
     bnp = BoundedNumericProperty(0, min=-500, max=500,
         errorhandler=lambda x: 500 if x > 500 else -500)
 
+Keyword arguments and __init__()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When working with inheritance, namely with the `__init__()` of an object that
+inherits from :class:`~kivy.event.EventDispatcher` e.g. a
+:class:`~kivy.uix.widget.Widget`, the properties protect
+you from a Python 3 object error. This error occurs when passing kwargs to the
+`object` instance through a `super()` call::
+
+    class MyClass(EventDispatcher):
+        def __init__(self, **kwargs):
+            super(MyClass, self).__init__(**kwargs)
+            self.my_string = kwargs.get('my_string')
+
+    print(MyClass(my_string='value').my_string)
+
+While this error is silenced in Python 2, it will stop the application
+in Python 3 with::
+
+    TypeError: object.__init__() takes no parameters
+
+Logically, to fix that you'd either put `my_string` directly in the
+`__init__()` definition as a required argument or as an optional keyword
+argument with a default value i.e.::
+
+    class MyClass(EventDispatcher):
+        def __init__(self, my_string, **kwargs):
+            super(MyClass, self).__init__(**kwargs)
+            self.my_string = my_string
+
+or::
+
+    class MyClass(EventDispatcher):
+        def __init__(self, my_string='default', **kwargs):
+            super(MyClass, self).__init__(**kwargs)
+            self.my_string = my_string
+
+Alternatively, you could pop the key-value pair from the `kwargs` dictionary
+before calling `super()`::
+
+    class MyClass(EventDispatcher):
+        def __init__(self, **kwargs):
+            self.my_string = kwargs.pop('my_string')
+            super(MyClass, self).__init__(**kwargs)
+
+Kivy properties are more flexible and do the required `kwargs.pop()`
+in the background automatically (within the `super()` call
+to :class:`~kivy.event.EventDispatcher`) to prevent this distraction::
+
+    class MyClass(EventDispatcher):
+        my_string = StringProperty('default')
+        def __init__(self, **kwargs):
+            super(MyClass, self).__init__(**kwargs)
+
+    print(MyClass(my_string='value').my_string)
 
 Conclusion
 ~~~~~~~~~~
@@ -214,7 +269,7 @@ __all__ = ('Property',
            'OptionProperty', 'ReferenceListProperty', 'AliasProperty',
            'DictProperty', 'VariableListProperty', 'ConfigParserProperty')
 
-include "graphics/config.pxi"
+include "include/config.pxi"
 
 
 from weakref import ref
@@ -731,6 +786,7 @@ cdef class ListProperty(Property):
 
         However, changes to nested levels will affect the property as well,
         since the property uses a shallow copy of my_list.
+
             >>> my_list[2]['hi'] = 'bye'
             >>> print(my_list, widget.my_list)
             [1, 5, {'hi': 'bye'}, 10] [1, 5, {'hi': 'bye'}]
@@ -1871,7 +1927,7 @@ cdef class ColorProperty(Property):
         `defaultvalue`: list or string, defaults to [1, 1, 1, 1]
             Specifies the default value of the property.
 
-    .. versionadded:: 1.9.2
+    .. versionadded:: 1.10.0
     '''
     def __init__(self, defaultvalue=None, **kw):
         defaultvalue = defaultvalue or [1, 1, 1, 1]
