@@ -8,7 +8,7 @@ matrix:
       dist: trusty
     - language: python
       python: 3.5
-      env: RUN=unit COVERALLS=true
+      env: RUN=unit
       os: linux
       dist: trusty
     - language: python
