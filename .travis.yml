@@ -44,7 +44,7 @@ install:
         sudo apt-get -y install python-setuptools build-essential libgl1-mesa-dev libgles2-mesa-dev;
         sudo apt-get -y install xvfb pulseaudio;
         pip install --upgrade pillow nose coveralls;
-        pip install https://github.com/cython/cython/archive/cc0273c1eb343283f0cc8d6cf3b6a31763a7ef87.zip --install-option=--no-cython-compile;
+        pip install https://github.com/cython/cython/archive/df39a2793a383e02301fa09767f2e013270efb0c.zip --install-option=--no-cython-compile;
       fi;
       if [ "${RUN}" == "docs" ]; then
         pip install --upgrade sphinxcontrib-blockdiag sphinxcontrib-seqdiag sphinxcontrib-actdiag sphinxcontrib-nwdiag;
@@ -76,9 +76,9 @@ install:
          curl -O -L https://www.python.org/ftp/python/3.5.2/python-3.5.2-macosx10.6.pkg;
          sudo installer -package python-3.5.2-macosx10.6.pkg -target /;
          pip3 install --upgrade --user pillow nose mock;
-         pip3 install https://github.com/cython/cython/archive/cc0273c1eb343283f0cc8d6cf3b6a31763a7ef87.zip --install-option=--no-cython-compile;
+         pip3 install https://github.com/cython/cython/archive/df39a2793a383e02301fa09767f2e013270efb0c.zip --install-option=--no-cython-compile;
       else
-         sudo pip install https://github.com/cython/cython/archive/cc0273c1eb343283f0cc8d6cf3b6a31763a7ef87.zip --install-option=--no-cython-compile;
+         sudo pip install https://github.com/cython/cython/archive/df39a2793a383e02301fa09767f2e013270efb0c.zip --install-option=--no-cython-compile;
          pip install --upgrade --user pillow nose mock;
       fi;
     fi;
